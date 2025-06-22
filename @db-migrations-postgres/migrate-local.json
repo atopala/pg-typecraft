@@ -1,0 +1,8 @@
+{
+  "migrationDirectory": "@db-migrations-postgres",
+  "migrationPattern": "@db-migrations-postgres/**",
+  "driver": "pg",
+  "host": "localhost",
+  "database": "postgres",
+  "schemaTable": "migration_one_sql"
+}
