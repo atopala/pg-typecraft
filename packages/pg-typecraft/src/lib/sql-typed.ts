@@ -14,7 +14,7 @@ export function newSqlTyped<T extends Record<string | symbol, unknown>>(sql: pos
             case "$table":
                return sql(target.$table);
             case "$all":
-               return sql(target.$all.map(col => `${target.$table}.${col}`));
+               return sql(target.$all.map((col) => `${target.$table}.${col}`));
             case "$from":
                return sql(target.$from);
             default:
@@ -29,7 +29,7 @@ export function newSqlTyped<T extends Record<string | symbol, unknown>>(sql: pos
 function isSqlTableType(value: unknown): value is {
    $table: string;
    $from: string;
-   $all: string[]
+   $all: string[];
 } & Record<string | symbol, unknown> {
    if (!value) return false;
 
@@ -55,8 +55,5 @@ function isSqlTableType(value: unknown): value is {
       return false;
    }
 
-   if (typeof value.$table !== "string") {
-      return false;
-   }
-   return true;
+   return typeof value.$table === "string";
 }
