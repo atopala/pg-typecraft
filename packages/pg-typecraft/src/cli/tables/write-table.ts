@@ -12,7 +12,7 @@ export function writeTable({ table }: PrintTableArgs): string {
    writer.writeLine(`import postgres from "postgres";`);
    writer.writeLine(`import * as lib from "./pg-typed.js";`);
    if (includeEnums) {
-      writer.writeLine(`// eslint-disable-next-line @typescript-eslint/no-unused-vars`);
+      // writer.writeLine(`// eslint-disable-next-line @typescript-eslint/no-unused-vars`);
       writer.writeLine(`import * as udt from "./${table_schema}-enums.js";`);
    }
 
