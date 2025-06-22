@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import { config, configs } from "typescript-eslint";
+import unusedImports from "eslint-plugin-unused-imports";
 
 export default config(
    {
@@ -18,7 +19,13 @@ export default config(
       languageOptions: {
          ecmaVersion: 2020,
       },
-      plugins: {},
-      rules: {},
+      plugins: {
+         "unused-imports": unusedImports,
+      },
+      rules: {
+         "@typescript-eslint/no-unused-vars": "off",
+         "unused-imports/no-unused-imports": "error",
+         "unused-imports/no-unused-vars": "error",
+      },
    },
 );

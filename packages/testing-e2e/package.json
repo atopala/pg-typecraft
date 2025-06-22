@@ -4,8 +4,9 @@
   "description": "e2e scenario testing with cucumber.js",
   "type": "module",
   "scripts": {
-    "build:1-tsc": "tsc -b",
-    "build": "run-s 'build:*'",
+    "prebuild:1-codegen": "pnpm run codegen",
+    "prebuild": "run-s 'prebuild:*'",
+    "build": "tsc -b",
     "test": "env-cmd --silent -f ../../.env cucumber-js --publish",
     "codegen": "run-s 'codegen:*'",
     "codegen:2-generate": "env-cmd -x -f ../../.env pg-typecraft generate --schema one_sql --pascalCaseTables --camelCaseColumns --uri \\$POSTGRES_URI --outDir 'src/codegen'",
