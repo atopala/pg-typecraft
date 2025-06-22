@@ -1,0 +1,22 @@
+{
+  "name": "example-postgres-cjs",
+  "version": "1.0.0",
+  "description": "",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "run-s 'build' 'dev:*'",
+    "dev:1-start": "vite-node src/index.ts | pino-pretty",
+    "codegen": "run-s 'codegen:*'",
+    "codegen:2-generate": "env-cmd -x -f ../../.env pg-typecraft generate --schema one_sql --pascalCaseTables --camelCaseColumns --uri \\$POSTGRES_URI --outDir 'src/codegen'",
+    "postcodegen": "pnpx eslint ./src/codegen/**/*.ts --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pg-typecraft": "workspace:^1.0.0",
+    "postgres": "^3.4.7"
+  }
+}
