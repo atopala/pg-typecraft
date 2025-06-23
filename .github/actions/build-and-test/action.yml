@@ -39,20 +39,20 @@ runs:
       run: pnpm install --frozen-lockfile
       shell: bash
 
-    - name: Setup database
-      shell: bash
-      run: pnpm -w run db-migrate
-      env:
-        POSTGRES_URI: postgresql://postgres:postgres@localhost:5432/testdb
-
     - name: Build project
       run: pnpm --filter='./packages/pg-typecraft' run build
       shell: bash
 
-    # installing pg-typecraft as workspace dependency
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
       shell: bash
+
+    - name: Wait for Postgres
+      uses: ./.github/actions/wait-for-postgres
+
+    - name: Migrate database
+      shell: bash
+      run: pnpm -w run db-migrate
 
     - name: Run tests
       id: tests
