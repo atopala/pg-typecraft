@@ -39,7 +39,8 @@ runs:
       run: pnpm install --frozen-lockfile
       shell: bash
 
-    - name: Build project
+    - name: Build pg-typecraft
+      id: build-pg-typecraft
       run: pnpm --filter='./packages/pg-typecraft' run build
       shell: bash
 
@@ -53,6 +54,17 @@ runs:
     - name: Migrate database
       shell: bash
       run: pnpm -w run db-migrate
+
+    - name: Run codegen
+      id: codegen
+      shell: bash
+      run: |
+        pnpm -r run codegen
+
+    - name: Build pg-typecraft
+      id: build-codegen
+      run: pnpm --filter='./packages/pg-typecraft' run build
+      shell: bash
 
     - name: Run tests
       id: tests
