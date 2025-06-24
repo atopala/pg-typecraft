@@ -64,7 +64,7 @@ runs:
     - name: List generated files
       shell: bash
       run: |
-        tree ./packages/pg-typecraft/src/generated
+        tree ./packages/testing-e2e/src
 
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
