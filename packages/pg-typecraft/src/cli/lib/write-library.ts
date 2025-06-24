@@ -1,11 +1,15 @@
 import path from "node:path";
 import { getCodegenContext } from "../codegen-context.js";
 import fs from "node:fs/promises";
+import { SqlOutputFile } from "../types/index.js";
 
 const files = ["../../../@templates/types.ts"];
 
-export async function writeLibrary() {
+export type LibraryOutputFile = Pick<SqlOutputFile, "fileName">;
+
+export async function writeLibrary(): Promise<LibraryOutputFile[]> {
    const { outDir } = getCodegenContext();
+   const filePath = path.resolve(outDir, "pg-typed.ts");
    let output = "";
    for (const file of files) {
       const filePath = path.resolve(new URL(import.meta.url).pathname, file);
@@ -14,7 +18,13 @@ export async function writeLibrary() {
       output += data;
    }
 
-   await fs.writeFile(path.resolve(outDir, "pg-typed.ts"), output, {
+   await fs.writeFile(filePath, output, {
       encoding: "utf8",
    });
+
+   return [
+      {
+         fileName: "pg-typed",
+      },
+   ];
 }

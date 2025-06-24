@@ -41,7 +41,7 @@ jobs:
       POSTGRES_HOST: localhost
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpassword
-      POSTGRES_DATABASE: testdb
+      POSTGRES_DATABASE: postgres
       POSTGRES_PORT: 5432
       NODE_ENV: test
       LOG_LEVEL: debug
