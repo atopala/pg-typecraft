@@ -90,6 +90,13 @@ main
             enums = await psql.findEnums(sql)({ schemas });
             logger.info(
                {
+                  postgres: {
+                     host,
+                     port,
+                     database,
+                     user,
+                     password: password ? "********" : undefined,
+                  },
                   schemas,
                   tables: tables.map(({ table_name, table_schema }) => ({ table_schema, table_name })),
                   enums: enums.map(({ enum_name, enum_schema }) => ({ enum_schema, enum_name })),
