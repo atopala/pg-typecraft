@@ -2,9 +2,6 @@ name: Build and Test (Composite)
 description: Common steps for build, test, and reporting in CI and release flows
 
 inputs:
-  CUCUMBER_PUBLISH_TOKEN:
-    description: Cucumber.io publish token
-    required: true
   GITHUB_TOKEN:
     description: GitHub token
     required: true
