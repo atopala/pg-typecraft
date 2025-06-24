@@ -18,7 +18,8 @@
     "clean:2-dependencies-r": "pnpm -r --parallel exec rimraf node_modules",
     "clean:3-dependencies-w": "pnpm exec rimraf node_modules",
     "clean-all": "run-s 'clean:*'",
-    "lint": "pnpm exec eslint . --ext .ts,.tsx,.js,.jsx"
+    "lint": "pnpm exec eslint . --ext .ts,.tsx,.js,.jsx",
+    "format": "prettier --write \"./packages/**/*.{js,ts,jsx,tsx,json,md,yml,yaml}\""
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

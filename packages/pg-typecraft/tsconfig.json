@@ -6,7 +6,9 @@
     "declaration": true,
     "declarationMap": true,
     "target": "ESNext",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "composite": true
   },
   "include": [
