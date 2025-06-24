@@ -58,9 +58,7 @@ export interface IAccount {
     * first_name varchar
     */
    firstName: postgres.Helper<"account.first_name">;
-
    $values(...values: IAccountInsert[]): postgres.Helper<IAccountInsert[], []>;
-
    $set(value: IAccountUpdate): postgres.Helper<IAccountUpdate, []>;
 }
 
