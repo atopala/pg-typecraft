@@ -57,9 +57,7 @@ export interface IProduct {
     * label varchar
     */
    label: postgres.Helper<"product.label">;
-
    $values(...values: IProductInsert[]): postgres.Helper<IProductInsert[], []>;
-
    $set(value: IProductUpdate): postgres.Helper<IProductUpdate, []>;
 }
 

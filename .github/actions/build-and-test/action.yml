@@ -59,7 +59,7 @@ runs:
       id: codegen
       shell: bash
       run: |
-        pnpm --filter='./packages/testing-e2e' run codegen
+        pnpm --filter='./packages/testing-e2e' run codegen || pino
 
     - name: List generated files
       shell: bash

@@ -67,7 +67,7 @@ main
                if (uri)
                   return postgres(uri, {
                      debug(...args) {
-                        logger.debug(args);
+                        logger.trace(args);
                      },
                   });
 
@@ -79,7 +79,7 @@ main
                      password,
                      database,
                      debug(...args) {
-                        logger.debug(args);
+                        logger.trace(args);
                      },
                   });
                }
@@ -88,6 +88,14 @@ main
             })();
             tables = await psql.findTables(sql)({ schemas });
             enums = await psql.findEnums(sql)({ schemas });
+            logger.info(
+               {
+                  schemas,
+                  tables: tables.map(({ table_name, table_schema }) => ({ table_schema, table_name })),
+                  enums: enums.map(({ enum_name, enum_schema }) => ({ enum_schema, enum_name })),
+               },
+               `Generating mapping code for ${schemas.join(", ")}`,
+            );
             await sql.end();
             context = new CodegenContextModel({
                outDir,

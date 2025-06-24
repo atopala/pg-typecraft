@@ -25,46 +25,46 @@ async function main() {
    const id = crypto.randomUUID().slice(0, 4);
 
    const [newAccount] = await sql`
-        insert into ${Account.$from}
-            ${Account.$values({
-               firstName: `John_${id}`,
-               lastName: `Doe_${id}`,
-               email: `test_${id}@example.com`,
-               status: AccountStatusUdt.CREATED,
-            })}
-            returning ${Account.$all}
-    `;
+      insert into ${Account}
+         ${Account.$values({
+            firstName: `John_${id}`,
+            lastName: `Doe_${id}`,
+            email: `test_${id}@example.com`,
+            status: AccountStatusUdt.CREATED,
+         })}
+         returning ${Account.$all}
+   `;
    console.log("new account:", newAccount);
    ok(newAccount?.accountId, "accountId is required");
 
    const newOrders = await sql`
-        insert into ${Order.$from}
-           ${Order.$values(
-              {
-                 accountId: newAccount.accountId,
-                 status: OrderStatusUdt.CREATED,
-                 createdAt: new Date(),
-                 modifiedAt: new Date(),
-              },
-              {
-                 accountId: newAccount.accountId,
-                 status: OrderStatusUdt.DELIVERED,
-                 createdAt: new Date(),
-                 modifiedAt: new Date(),
-              },
-           )}
-            returning ${Order.$all}
-    `;
+      insert into ${Order}
+         ${Order.$values(
+            {
+               accountId: newAccount.accountId,
+               status: OrderStatusUdt.CREATED,
+               createdAt: new Date(),
+               modifiedAt: new Date(),
+            },
+            {
+               accountId: newAccount.accountId,
+               status: OrderStatusUdt.DELIVERED,
+               createdAt: new Date(),
+               modifiedAt: new Date(),
+            },
+         )}
+         returning ${Order.$all}
+   `;
    ok(newOrders?.length);
 
    const [accountUpdated] = await sql`
-        update ${Account.$from}
-        set ${Account.$set({
-           status: AccountStatusUdt.CONFIRMED,
-        })}
-        where ${Account.accountId} = ${newAccount.accountId}
-        returning ${Account.$all}
-    `;
+      update ${Account}
+      set ${Account.$set({
+         status: AccountStatusUdt.CONFIRMED,
+      })}
+      where ${Account.accountId} = ${newAccount.accountId}
+      returning ${Account.$all}
+   `;
    console.log("account updated:", accountUpdated);
 
    interface AccountWithOrders extends IAccountSelect {
@@ -72,21 +72,21 @@ async function main() {
    }
 
    const [accountWithLimitedOrders] = await sql<AccountWithOrders[]>`
-        SELECT ${Account.$all},
-               COALESCE(
-                               jsonb_agg(orders.*) FILTER (WHERE orders.* IS NOT NULL),
-                               '[]'
-               ) as orders
-        FROM ${Account.$from}
-                 LEFT JOIN LATERAL (
-            SELECT ${Order.orderId}, ${Order.createdAt}, ${Order.status}
-            FROM ${Order.$from}
-            WHERE ${Order.accountId} = ${Account.accountId}
-            ORDER BY ${Order.createdAt} DESC
-            LIMIT 5 -- Get only the 5 most recent orders
-            ) orders ON true
-        WHERE ${Account.accountId} = ${newAccount.accountId}
-        GROUP BY ${Account.accountId}`;
+      SELECT ${Account.$all},
+             COALESCE(
+                   jsonb_agg(orders.*) FILTER (WHERE orders.* IS NOT NULL),
+                   '[]'
+             ) as orders
+      FROM ${Account}
+              LEFT JOIN LATERAL (
+         SELECT ${Order.orderId}, ${Order.createdAt}, ${Order.status}
+         FROM ${Order}
+         WHERE ${Order.accountId} = ${Account.accountId}
+         ORDER BY ${Order.createdAt} DESC
+         LIMIT 5 -- Get only the 5 most recent orders
+         ) orders ON true
+      WHERE ${Account.accountId} = ${newAccount.accountId}
+      GROUP BY ${Account.accountId}`;
 
    console.log("account with orders:\n", accountWithLimitedOrders);
 }
