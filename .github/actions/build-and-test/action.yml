@@ -106,3 +106,9 @@ runs:
       with:
         check_name: 'Cucumber Tests'
         report_paths: './packages/testing-e2e/test-results/cucumber-junit.xml'
+
+    - name: Deploy report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./packages/testing-e2e/test-results
