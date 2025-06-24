@@ -61,6 +61,14 @@ runs:
       run: |
         pnpm -r run codegen
 
+    - name: List generated files
+      shell: bash
+      run: |
+        tree ./packages/pg-typecraft/src/generated
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+      shell: bash
     - name: Build pg-typecraft
       id: build-codegen
       run: pnpm --filter='./packages/pg-typecraft' run build
