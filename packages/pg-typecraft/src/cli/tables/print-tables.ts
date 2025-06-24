@@ -4,6 +4,7 @@ import to from "to-case";
 import { SqlOutputFile, SqlTableInfo } from "../types/index.js";
 import { getCodegenContext } from "../codegen-context.js";
 import { writeTable } from "./write-table.js";
+import { logger } from "../logger.js";
 
 export interface WriteTablesArgs {
    tables: SqlTableInfo[];
@@ -23,7 +24,7 @@ export async function printTables({ tables }: WriteTablesArgs): Promise<SqlOutpu
          schemaName: table_schema,
          tableTypeName: getTableName(table_name),
       });
-      console.log("Writing:", { tableSchema: table_schema, tableName: table_name, filePath });
+      logger.debug({ tableSchema: table_schema, tableName: table_name, filePath }, "Writing table file");
       await fs.writeFile(filePath, output, { encoding: "utf8" });
       await fs.stat(filePath);
    }

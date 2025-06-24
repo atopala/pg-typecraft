@@ -58,9 +58,7 @@ export interface IAccount {
     * notes text
     */
    notes: postgres.Helper<"account.notes">;
-
    $values(...values: IAccountInsert[]): postgres.Helper<IAccountInsert[], []>;
-
    $set(value: IAccountUpdate): postgres.Helper<IAccountUpdate, []>;
 }
 

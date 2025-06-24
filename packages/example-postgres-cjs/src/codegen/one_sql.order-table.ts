@@ -34,9 +34,7 @@ export interface IOrder {
     * account_id uuid
     */
    accountId: postgres.Helper<"order.account_id">;
-
    $values(...values: IOrderInsert[]): postgres.Helper<IOrderInsert[], []>;
-
    $set(value: IOrderUpdate): postgres.Helper<IOrderUpdate, []>;
 }
 
