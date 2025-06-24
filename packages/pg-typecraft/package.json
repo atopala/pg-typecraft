@@ -11,10 +11,11 @@
       "postgres",
       "postgres.js",
       "strongly typed sql",
-      "query builder"
+      "query builder",
+      "orm"
    ],
    "author": "Adrian Topala",
-   "license": "ISC",
+   "license": "MIT",
    "repository": "https://github.com/atopala/pg-typecraft",
    "publishConfig": {
       "access": "public"
@@ -27,11 +28,13 @@
       "pg-typecraft": "./dist/cli/main.js"
    },
    "scripts": {
-      "preinstall": "mkdir -p ./dist/cli && touch ./dist/cli/main.js",
+      "preinstall": "hereby preinstall",
       "build": "run-s 'build:*'",
       "build:1-template-1": "copyfiles -f ./src/lib/sql-typed.ts ./dist/@templates",
       "build:1-template-2": "copyfiles -f ./src/lib/types.ts ./dist/@templates",
-      "build:2-tsc": "tsc -b"
+      "build:2-tsc": "tsc -b",
+      "prepack:1-copy-readme": "copyfiles -f \"../../README.md\" .",
+      "prepack": "run-s 'build' 'prepack:*'"
    },
    "dependencies": {
       "code-block-writer": "^11.0.0",
