@@ -135,15 +135,16 @@ main
             tables,
          });
 
-         const schemas = await printSchemas({
+         const schemaFiles = await printSchemas({
             files: [...tableFiles, ...enumFiles],
          });
 
-         await writeIndex({
-            files: schemas,
-         });
+         const libraryFiles = await writeLibrary();
 
-         await writeLibrary();
+         await writeIndex({
+            libraryFiles,
+            schemaFiles,
+         });
       });
    });
 
