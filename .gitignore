@@ -19,3 +19,4 @@ deploy*
 
 test-results
 .env
+mailmap.txt
