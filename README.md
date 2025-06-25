@@ -5,6 +5,8 @@ enabling type-safe SQL queries with [**postgres.js**](https://www.npmjs.com/pack
 
 The generated code needs zero dependencies. It only needs `postgres.js` which you already use.
 
+[![CI](https://github.com/atopala/pg-typecraft/actions/workflows/ci_github.yml/badge.svg)](https://github.com/atopala/pg-typecraft/actions/workflows/ci_github.yml)
+
 ## Quickstart
 > code sample from the example at: https://github.com/atopala/pg-typecraft
 

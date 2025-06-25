@@ -17,5 +17,5 @@ export function newOneSqlSchema(sql: postgres.Sql) {
       Account: newAccount(sql),
       Order: newOrder(sql),
       OrderItem: newOrderItem(sql),
-   }
+   };
 }

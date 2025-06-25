@@ -3,111 +3,129 @@ import postgres from "postgres";
 import * as lib from "./pg-typed.js";
 
 export interface IProduct {
-   $pk: postgres.Helper<"product_pk">, 
-   $table: "product",
-   $all: postgres.Helper<["product.is_published", "product.modified_at", "product.price", "product.discount", "product.is_available", "product.product_id", "product.created_at", "product.label"]>,
+   $pk: postgres.Helper<"product_pk">;
+   $table: "product";
+   $all: postgres.Helper<
+      [
+         "product.is_published",
+         "product.modified_at",
+         "product.price",
+         "product.discount",
+         "product.is_available",
+         "product.product_id",
+         "product.created_at",
+         "product.label",
+      ]
+   >;
 
    /**
     * is_published bool default false
-   */
-   isPublished: postgres.Helper<"product.is_published">,
+    */
+   isPublished: postgres.Helper<"product.is_published">;
 
    /**
     * modified_at timestamptz default now()
-   */
-   modifiedAt: postgres.Helper<"product.modified_at">,
+    */
+   modifiedAt: postgres.Helper<"product.modified_at">;
 
    /**
     * price numeric
-   */
-   price: postgres.Helper<"product.price">,
+    */
+   price: postgres.Helper<"product.price">;
 
    /**
     * discount numeric
-   */
-   discount: postgres.Helper<"product.discount">,
+    */
+   discount: postgres.Helper<"product.discount">;
 
    /**
     * is_available bool default true
-   */
-   isAvailable: postgres.Helper<"product.is_available">,
+    */
+   isAvailable: postgres.Helper<"product.is_available">;
 
    /**
     * product_id uuid default gen_random_uuid()
-   */
-   productId: postgres.Helper<"product.product_id">,
+    */
+   productId: postgres.Helper<"product.product_id">;
 
    /**
     * created_at timestamptz default now()
-   */
-   createdAt: postgres.Helper<"product.created_at">,
+    */
+   createdAt: postgres.Helper<"product.created_at">;
 
    /**
     * label varchar
-   */
-   label: postgres.Helper<"product.label">,
-   $values(...values: IProductInsert[]): postgres.Helper<IProductInsert[], []>
-   $set(value: IProductUpdate): postgres.Helper<IProductUpdate, []>
+    */
+   label: postgres.Helper<"product.label">;
+   $values(...values: IProductInsert[]): postgres.Helper<IProductInsert[], []>;
+   $set(value: IProductUpdate): postgres.Helper<IProductUpdate, []>;
 }
 
 export function newProduct(sql: postgres.Sql): IProduct & postgres.Helper<"one_sql.product"> {
    const obj: IProduct = {
-      $pk: sql("product_pk"), 
+      $pk: sql("product_pk"),
       $table: "product",
-      $all: sql(["product.is_published", "product.modified_at", "product.price", "product.discount", "product.is_available", "product.product_id", "product.created_at", "product.label"]),
-      $values(...values: IProductInsert[]){
+      $all: sql([
+         "product.is_published",
+         "product.modified_at",
+         "product.price",
+         "product.discount",
+         "product.is_available",
+         "product.product_id",
+         "product.created_at",
+         "product.label",
+      ]),
+      $values(...values: IProductInsert[]) {
          return sql<IProductInsert[], []>(values);
       },
 
-      $set(value: IProductUpdate){
+      $set(value: IProductUpdate) {
          return sql<IProductUpdate, []>(value);
       },
 
-
       /**
        * is_published bool default false
-      */
+       */
       isPublished: sql("product.is_published"),
 
       /**
        * modified_at timestamptz default now()
-      */
+       */
       modifiedAt: sql("product.modified_at"),
 
       /**
        * price numeric
-      */
+       */
       price: sql("product.price"),
 
       /**
        * discount numeric
-      */
+       */
       discount: sql("product.discount"),
 
       /**
        * is_available bool default true
-      */
+       */
       isAvailable: sql("product.is_available"),
 
       /**
        * product_id uuid default gen_random_uuid()
-      */
+       */
       productId: sql("product.product_id"),
 
       /**
        * created_at timestamptz default now()
-      */
+       */
       createdAt: sql("product.created_at"),
 
       /**
        * label varchar
-      */
+       */
       label: sql("product.label"),
    };
    const from = sql("one_sql.product");
    return Object.assign(from, obj);
 }
-
 
 export type IProductInsert = {
    isPublished?: boolean;
@@ -118,19 +136,19 @@ export type IProductInsert = {
    productId?: string;
    createdAt?: Date;
    label: string;
-}
+};
 
 export type IProductUpdate = Partial<IProductInsert>;
 
 export type IProductSelect = {
-   readonly isPublished: boolean
-   readonly modifiedAt: Date
-   readonly price: string
-   readonly discount: string | null
-   readonly isAvailable: boolean
-   readonly productId: string
-   readonly createdAt: Date
-   readonly label: string
-}
+   readonly isPublished: boolean;
+   readonly modifiedAt: Date;
+   readonly price: string;
+   readonly discount: string | null;
+   readonly isAvailable: boolean;
+   readonly productId: string;
+   readonly createdAt: Date;
+   readonly label: string;
+};
 
 export type IProductJson = lib.JsonRow<IProductSelect>;

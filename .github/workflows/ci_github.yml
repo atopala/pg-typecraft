@@ -41,9 +41,10 @@ jobs:
       POSTGRES_HOST: localhost
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpassword
-      POSTGRES_DB: testdb
+      POSTGRES_DATABASE: postgres
       POSTGRES_PORT: 5432
       NODE_ENV: test
+      LOG_LEVEL: debug
 
     steps:
       - name: Checkout code
@@ -52,5 +53,4 @@ jobs:
       - name: Build and test
         uses: ./.github/actions/build-and-test
         with:
-          CUCUMBER_PUBLISH_TOKEN: ${{ secrets.CUCUMBER_PUBLISH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

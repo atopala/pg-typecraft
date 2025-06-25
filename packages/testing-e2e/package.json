@@ -1,30 +1,31 @@
 {
-  "name": "testing-e2e",
-  "version": "1.0.0",
-  "description": "e2e scenario testing with cucumber.js",
-  "type": "module",
-  "scripts": {
-    "prebuild:1-codegen": "pnpm run codegen",
-    "prebuild": "run-s 'prebuild:*'",
-    "build": "tsc -b",
-    "test": "env-cmd --silent -f ../../.env cucumber-js --publish",
-    "codegen": "run-s 'codegen:*'",
-    "codegen:2-generate": "env-cmd -x -f ../../.env pg-typecraft generate --schema one_sql --pascalCaseTables --camelCaseColumns --uri \\$POSTGRES_URI --outDir 'src/codegen'",
-    "postcodegen": "pnpx eslint ./src/codegen/**/*.ts --fix"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "postgres": "^3.4.7",
-    "@cucumber/cucumber": "^11.3.0",
-    "glob": "^11.0.2"
-  },
-  "devDependencies": {
-    "pg-typecraft": "workspace:^1.0.0",
-    "@cucumber/pretty-formatter": "^1.0.1",
-    "copyfiles": "^2.4.1",
-    "cucumber-html-reporter": "latest",
-    "ts-node": "^10.9.2"
-  }
+   "name": "testing-e2e",
+   "version": "1.0.0",
+   "description": "e2e scenario testing with cucumber.js",
+   "type": "module",
+   "scripts": {
+      "prebuild:1-codegen": "pnpm run codegen",
+      "prebuild": "run-s 'prebuild:*'",
+      "build": "tsc -b",
+      "test": "env-cmd --silent -f ../../.env cucumber-js --publish",
+      "codegen": "run-s 'codegen:*'",
+      "codegen:1-generate": "env-cmd --silent -x -f ../../.env pg-typecraft generate --schema one_sql --pascalCaseTables --camelCaseColumns --host \\$POSTGRES_HOST --port \\$POSTGRES_PORT --database \\$POSTGRES_DATABASE --user \\$POSTGRES_USER --password \\$POSTGRES_PASSWORD --outDir 'src/codegen'",
+      "postcodegen": "pnpx eslint ./src/codegen/**/*.ts --fix"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "dependencies": {
+      "@cucumber/cucumber": "^11.3.0",
+      "@sinclair/typebox": "^0.34.36",
+      "glob": "^11.0.2",
+      "postgres": "^3.4.7"
+   },
+   "devDependencies": {
+      "@cucumber/pretty-formatter": "^1.0.1",
+      "copyfiles": "^2.4.1",
+      "cucumber-html-reporter": "latest",
+      "pg-typecraft": "workspace:^1.0.0",
+      "ts-node": "^10.9.2"
+   }
 }
