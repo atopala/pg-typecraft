@@ -7,6 +7,18 @@ The generated code needs zero dependencies. It only needs `postgres.js` which yo
 
 [![CI](https://github.com/atopala/pg-typecraft/actions/workflows/ci_github.yml/badge.svg)](https://github.com/atopala/pg-typecraft/actions/workflows/ci_github.yml)
 
+## Table of Contents
+
+- [Quickstart](#quickstart)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Type-Safe Query Examples](#type-safe-query-examples)
+- [Configuration](#configuration)
+- [CI/CD Integration](#cicd-integration)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Quickstart
 > code sample from the example at: https://github.com/atopala/pg-typecraft
 
@@ -215,6 +227,13 @@ const sql = postgres({
 
 pg-typecraft can be seamlessly integrated into your CI/CD pipeline to ensure type safety and SQL query validation against your latest database schema.
 This integration helps catch potential database-related issues early in the development cycle.
+
+Please check `CI (GitHub)` workflow in this repository for a CI/CD example:
+> https://github.com/atopala/pg-typecraft/actions/workflows/ci_github.yml
+* Spin off a Postgres container for use during CI/CD
+* Execute db migrations against the Postgres instance
+* Re-generate mapping code with `pg-typecraft` and build 
+* Run automated testing using the re-generated code against the newly provisioned Postgres instance
 
 ### Benefits
 * Automatic type generation during build process
