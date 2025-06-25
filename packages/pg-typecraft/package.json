@@ -7,6 +7,8 @@
    "main": "dist/lib/index.js",
    "types": "dist/lib/index.d.ts",
    "keywords": [
+      "pg-typecraft",
+      "postgres sql",
       "sql",
       "postgres",
       "postgres.js",
@@ -36,6 +38,11 @@
       "prepack:1-copy-readme": "copyfiles -f \"../../README.md\" .",
       "prepack": "run-s 'build' 'prepack:*'"
    },
+   "files": [
+      "dist",
+      "package.json",
+      "README.md"
+   ],
    "dependencies": {
       "code-block-writer": "^11.0.0",
       "commander": "^9.1.0",
