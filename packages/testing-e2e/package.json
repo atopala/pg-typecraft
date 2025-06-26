@@ -7,9 +7,9 @@
       "prebuild:1-codegen": "pnpm run codegen",
       "prebuild": "run-s 'prebuild:*'",
       "build": "tsc -b",
-      "test": "env-cmd --silent -f ../../.env cucumber-js --publish",
+      "test": "env-cmd --silent -x -r ../../env-dev.json -e db cucumber-js --publish",
       "codegen": "run-s 'codegen:*'",
-      "codegen:1-generate": "env-cmd --silent -x -f ../../.env pg-typecraft generate --schema one_sql --pascalCaseTables --camelCaseColumns --host \\$POSTGRES_HOST --port \\$POSTGRES_PORT --database \\$POSTGRES_DATABASE --user \\$POSTGRES_USER --password \\$POSTGRES_PASSWORD --outDir 'src/codegen'",
+      "codegen:1-generate": "env-cmd --silent -x -r ../../env-dev.json -e db pg-typecraft generate --schema one_sql --pascalCaseTables --camelCaseColumns --host \\$POSTGRES_HOST --port \\$POSTGRES_PORT --database \\$POSTGRES_DATABASE --user \\$POSTGRES_USER --password \\$POSTGRES_PASSWORD --outDir 'src/codegen'",
       "postcodegen": "pnpx eslint ./src/codegen/**/*.ts --fix"
    },
    "keywords": [],
