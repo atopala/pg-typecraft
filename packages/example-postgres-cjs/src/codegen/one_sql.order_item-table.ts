@@ -7,31 +7,21 @@ export interface IOrderItem {
    $table: "order_item";
    $all: postgres.Helper<
       [
-         "order_item.order_item_id",
-         "order_item.created_at",
-         "order_item.modified_at",
+         "order_item.quantity",
          "order_item.order_id",
          "order_item.product_id",
          "order_item.product_price",
          "order_item.discount_price",
-         "order_item.quantity",
+         "order_item.order_item_id",
+         "order_item.created_at",
+         "order_item.modified_at",
       ]
    >;
 
    /**
-    * order_item_id uuid default gen_random_uuid()
+    * quantity int4
     */
-   orderItemId: postgres.Helper<"order_item.order_item_id">;
-
-   /**
-    * created_at timestamptz
-    */
-   createdAt: postgres.Helper<"order_item.created_at">;
-
-   /**
-    * modified_at timestamptz
-    */
-   modifiedAt: postgres.Helper<"order_item.modified_at">;
+   quantity: postgres.Helper<"order_item.quantity">;
 
    /**
     * order_id uuid
@@ -54,12 +44,20 @@ export interface IOrderItem {
    discountPrice: postgres.Helper<"order_item.discount_price">;
 
    /**
-    * quantity int4
+    * order_item_id uuid default gen_random_uuid()
     */
-   quantity: postgres.Helper<"order_item.quantity">;
+   orderItemId: postgres.Helper<"order_item.order_item_id">;
 
+   /**
+    * created_at timestamptz
+    */
+   createdAt: postgres.Helper<"order_item.created_at">;
+
+   /**
+    * modified_at timestamptz
+    */
+   modifiedAt: postgres.Helper<"order_item.modified_at">;
    $values(...values: IOrderItemInsert[]): postgres.Helper<IOrderItemInsert[], []>;
-
    $set(value: IOrderItemUpdate): postgres.Helper<IOrderItemUpdate, []>;
 }
 
@@ -68,14 +66,14 @@ export function newOrderItem(sql: postgres.Sql): IOrderItem & postgres.Helper<"o
       $pk: sql("order_item_pk"),
       $table: "order_item",
       $all: sql([
-         "order_item.order_item_id",
-         "order_item.created_at",
-         "order_item.modified_at",
+         "order_item.quantity",
          "order_item.order_id",
          "order_item.product_id",
          "order_item.product_price",
          "order_item.discount_price",
-         "order_item.quantity",
+         "order_item.order_item_id",
+         "order_item.created_at",
+         "order_item.modified_at",
       ]),
       $values(...values: IOrderItemInsert[]) {
          return sql<IOrderItemInsert[], []>(values);
@@ -86,19 +84,9 @@ export function newOrderItem(sql: postgres.Sql): IOrderItem & postgres.Helper<"o
       },
 
       /**
-       * order_item_id uuid default gen_random_uuid()
+       * quantity int4
        */
-      orderItemId: sql("order_item.order_item_id"),
-
-      /**
-       * created_at timestamptz
-       */
-      createdAt: sql("order_item.created_at"),
-
-      /**
-       * modified_at timestamptz
-       */
-      modifiedAt: sql("order_item.modified_at"),
+      quantity: sql("order_item.quantity"),
 
       /**
        * order_id uuid
@@ -121,36 +109,46 @@ export function newOrderItem(sql: postgres.Sql): IOrderItem & postgres.Helper<"o
       discountPrice: sql("order_item.discount_price"),
 
       /**
-       * quantity int4
+       * order_item_id uuid default gen_random_uuid()
        */
-      quantity: sql("order_item.quantity"),
+      orderItemId: sql("order_item.order_item_id"),
+
+      /**
+       * created_at timestamptz
+       */
+      createdAt: sql("order_item.created_at"),
+
+      /**
+       * modified_at timestamptz
+       */
+      modifiedAt: sql("order_item.modified_at"),
    };
    const from = sql("one_sql.order_item");
    return Object.assign(from, obj);
 }
 
 export type IOrderItemInsert = {
-   orderItemId?: string;
-   createdAt: Date;
-   modifiedAt: Date;
+   quantity: number;
    orderId: string;
    productId: string;
    productPrice: string;
    discountPrice?: string | null;
-   quantity: number;
+   orderItemId?: string;
+   createdAt: Date;
+   modifiedAt: Date;
 };
 
 export type IOrderItemUpdate = Partial<IOrderItemInsert>;
 
 export type IOrderItemSelect = {
-   readonly orderItemId: string;
-   readonly createdAt: Date;
-   readonly modifiedAt: Date;
+   readonly quantity: number;
    readonly orderId: string;
    readonly productId: string;
    readonly productPrice: string;
    readonly discountPrice: string | null;
-   readonly quantity: number;
+   readonly orderItemId: string;
+   readonly createdAt: Date;
+   readonly modifiedAt: Date;
 };
 
 export type IOrderItemJson = lib.JsonRow<IOrderItemSelect>;

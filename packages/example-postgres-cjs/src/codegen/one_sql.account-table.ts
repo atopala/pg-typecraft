@@ -8,26 +8,26 @@ export interface IAccount {
    $table: "account";
    $all: postgres.Helper<
       [
-         "account.status",
          "account.account_id",
+         "account.status",
          "account.created_at",
          "account.modified_at",
-         "account.email",
-         "account.first_name",
          "account.last_name",
          "account.notes",
+         "account.email",
+         "account.first_name",
       ]
    >;
-
-   /**
-    * status account_status default 'created'::one_sql.account_status
-    */
-   status: postgres.Helper<"account.status">;
 
    /**
     * account_id uuid default gen_random_uuid()
     */
    accountId: postgres.Helper<"account.account_id">;
+
+   /**
+    * status account_status default 'created'::one_sql.account_status
+    */
+   status: postgres.Helper<"account.status">;
 
    /**
     * created_at timestamptz default now()
@@ -40,16 +40,6 @@ export interface IAccount {
    modifiedAt: postgres.Helper<"account.modified_at">;
 
    /**
-    * email varchar
-    */
-   email: postgres.Helper<"account.email">;
-
-   /**
-    * first_name varchar
-    */
-   firstName: postgres.Helper<"account.first_name">;
-
-   /**
     * last_name varchar
     */
    lastName: postgres.Helper<"account.last_name">;
@@ -58,6 +48,16 @@ export interface IAccount {
     * notes text
     */
    notes: postgres.Helper<"account.notes">;
+
+   /**
+    * email varchar
+    */
+   email: postgres.Helper<"account.email">;
+
+   /**
+    * first_name varchar
+    */
+   firstName: postgres.Helper<"account.first_name">;
    $values(...values: IAccountInsert[]): postgres.Helper<IAccountInsert[], []>;
    $set(value: IAccountUpdate): postgres.Helper<IAccountUpdate, []>;
 }
@@ -67,14 +67,14 @@ export function newAccount(sql: postgres.Sql): IAccount & postgres.Helper<"one_s
       $pk: sql("account_pk"),
       $table: "account",
       $all: sql([
-         "account.status",
          "account.account_id",
+         "account.status",
          "account.created_at",
          "account.modified_at",
-         "account.email",
-         "account.first_name",
          "account.last_name",
          "account.notes",
+         "account.email",
+         "account.first_name",
       ]),
       $values(...values: IAccountInsert[]) {
          return sql<IAccountInsert[], []>(values);
@@ -85,14 +85,14 @@ export function newAccount(sql: postgres.Sql): IAccount & postgres.Helper<"one_s
       },
 
       /**
-       * status account_status default 'created'::one_sql.account_status
-       */
-      status: sql("account.status"),
-
-      /**
        * account_id uuid default gen_random_uuid()
        */
       accountId: sql("account.account_id"),
+
+      /**
+       * status account_status default 'created'::one_sql.account_status
+       */
+      status: sql("account.status"),
 
       /**
        * created_at timestamptz default now()
@@ -105,16 +105,6 @@ export function newAccount(sql: postgres.Sql): IAccount & postgres.Helper<"one_s
       modifiedAt: sql("account.modified_at"),
 
       /**
-       * email varchar
-       */
-      email: sql("account.email"),
-
-      /**
-       * first_name varchar
-       */
-      firstName: sql("account.first_name"),
-
-      /**
        * last_name varchar
        */
       lastName: sql("account.last_name"),
@@ -123,33 +113,43 @@ export function newAccount(sql: postgres.Sql): IAccount & postgres.Helper<"one_s
        * notes text
        */
       notes: sql("account.notes"),
+
+      /**
+       * email varchar
+       */
+      email: sql("account.email"),
+
+      /**
+       * first_name varchar
+       */
+      firstName: sql("account.first_name"),
    };
    const from = sql("one_sql.account");
    return Object.assign(from, obj);
 }
 
 export type IAccountInsert = {
-   status?: udt.AccountStatusUdt;
    accountId?: string;
+   status?: udt.AccountStatusUdt;
    createdAt?: Date;
    modifiedAt?: Date;
-   email: string;
-   firstName: string;
    lastName: string;
    notes?: string | null;
+   email: string;
+   firstName: string;
 };
 
 export type IAccountUpdate = Partial<IAccountInsert>;
 
 export type IAccountSelect = {
-   readonly status: udt.AccountStatusUdt;
    readonly accountId: string;
+   readonly status: udt.AccountStatusUdt;
    readonly createdAt: Date;
    readonly modifiedAt: Date;
-   readonly email: string;
-   readonly firstName: string;
    readonly lastName: string;
    readonly notes: string | null;
+   readonly email: string;
+   readonly firstName: string;
 };
 
 export type IAccountJson = lib.JsonRow<IAccountSelect>;

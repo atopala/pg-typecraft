@@ -7,26 +7,31 @@ export interface IProduct {
    $table: "product";
    $all: postgres.Helper<
       [
-         "product.is_published",
+         "product.created_at",
          "product.modified_at",
+         "product.product_id",
          "product.price",
          "product.discount",
          "product.is_available",
-         "product.product_id",
-         "product.created_at",
+         "product.is_published",
          "product.label",
       ]
    >;
 
    /**
-    * is_published bool default false
+    * created_at timestamptz default now()
     */
-   isPublished: postgres.Helper<"product.is_published">;
+   createdAt: postgres.Helper<"product.created_at">;
 
    /**
     * modified_at timestamptz default now()
     */
    modifiedAt: postgres.Helper<"product.modified_at">;
+
+   /**
+    * product_id uuid default gen_random_uuid()
+    */
+   productId: postgres.Helper<"product.product_id">;
 
    /**
     * price numeric
@@ -44,14 +49,9 @@ export interface IProduct {
    isAvailable: postgres.Helper<"product.is_available">;
 
    /**
-    * product_id uuid default gen_random_uuid()
+    * is_published bool default false
     */
-   productId: postgres.Helper<"product.product_id">;
-
-   /**
-    * created_at timestamptz default now()
-    */
-   createdAt: postgres.Helper<"product.created_at">;
+   isPublished: postgres.Helper<"product.is_published">;
 
    /**
     * label varchar
@@ -66,13 +66,13 @@ export function newProduct(sql: postgres.Sql): IProduct & postgres.Helper<"one_s
       $pk: sql("product_pk"),
       $table: "product",
       $all: sql([
-         "product.is_published",
+         "product.created_at",
          "product.modified_at",
+         "product.product_id",
          "product.price",
          "product.discount",
          "product.is_available",
-         "product.product_id",
-         "product.created_at",
+         "product.is_published",
          "product.label",
       ]),
       $values(...values: IProductInsert[]) {
@@ -84,14 +84,19 @@ export function newProduct(sql: postgres.Sql): IProduct & postgres.Helper<"one_s
       },
 
       /**
-       * is_published bool default false
+       * created_at timestamptz default now()
        */
-      isPublished: sql("product.is_published"),
+      createdAt: sql("product.created_at"),
 
       /**
        * modified_at timestamptz default now()
        */
       modifiedAt: sql("product.modified_at"),
+
+      /**
+       * product_id uuid default gen_random_uuid()
+       */
+      productId: sql("product.product_id"),
 
       /**
        * price numeric
@@ -109,14 +114,9 @@ export function newProduct(sql: postgres.Sql): IProduct & postgres.Helper<"one_s
       isAvailable: sql("product.is_available"),
 
       /**
-       * product_id uuid default gen_random_uuid()
+       * is_published bool default false
        */
-      productId: sql("product.product_id"),
-
-      /**
-       * created_at timestamptz default now()
-       */
-      createdAt: sql("product.created_at"),
+      isPublished: sql("product.is_published"),
 
       /**
        * label varchar
@@ -128,26 +128,26 @@ export function newProduct(sql: postgres.Sql): IProduct & postgres.Helper<"one_s
 }
 
 export type IProductInsert = {
-   isPublished?: boolean;
+   createdAt?: Date;
    modifiedAt?: Date;
+   productId?: string;
    price: string;
    discount?: string | null;
    isAvailable?: boolean;
-   productId?: string;
-   createdAt?: Date;
+   isPublished?: boolean;
    label: string;
 };
 
 export type IProductUpdate = Partial<IProductInsert>;
 
 export type IProductSelect = {
-   readonly isPublished: boolean;
+   readonly createdAt: Date;
    readonly modifiedAt: Date;
+   readonly productId: string;
    readonly price: string;
    readonly discount: string | null;
    readonly isAvailable: boolean;
-   readonly productId: string;
-   readonly createdAt: Date;
+   readonly isPublished: boolean;
    readonly label: string;
 };
 
